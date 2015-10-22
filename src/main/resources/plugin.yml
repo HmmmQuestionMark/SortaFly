@@ -1,5 +1,5 @@
 name: SortaFly
 main: com.demigodsrpg.sortafly.SortaFly
-version: 1.0.0
+version: ${project.version}
 description: Let players sorta fly.
 authors: [HmmmQuestionMark]

@@ -31,6 +31,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -66,10 +67,30 @@ public class SortaFly extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-
-        if (!player.isFlying() && player.isSneaking() && player.getLocation().getY() <= UPPER_BOUND) {
-            Vector victor = (player.getPassenger() != null && player.getLocation().getDirection().getY() > 0 ? player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).normalize().multiply(1.3D);
+        if (!player.isFlying() &&  !isLight(player.getInventory().getBoots()) && player.isSneaking() &&
+                player.getLocation().getY() <= UPPER_BOUND) {
+            Vector victor = (player.getPassenger() != null && player.getLocation().getDirection().getY() > 0 ?
+                    player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).
+                    normalize().multiply(1.3D);
             player.setVelocity(victor);
+        }
+    }
+
+    private boolean isLight(ItemStack item) {
+        if(item == null) {
+            return true;
+        }
+        switch (item.getType()) {
+            case AIR:
+            case LEATHER_BOOTS:
+            case CHAINMAIL_BOOTS:
+                return true;
+            case IRON_BOOTS:
+            case GOLD_BOOTS:
+            case DIAMOND_BOOTS:
+                return false;
+            default:
+                return true;
         }
     }
 }
