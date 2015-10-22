@@ -67,7 +67,7 @@ public class SortaFly extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        if (!player.isFlying() &&  !isLight(player.getInventory().getBoots()) && player.isSneaking() &&
+        if (!player.isFlying() && isLight(player.getInventory().getBoots()) && player.isSneaking() &&
                 player.getLocation().getY() <= UPPER_BOUND) {
             Vector victor = (player.getPassenger() != null && player.getLocation().getDirection().getY() > 0 ?
                     player.getLocation().getDirection().clone().setY(0) : player.getLocation().getDirection()).
